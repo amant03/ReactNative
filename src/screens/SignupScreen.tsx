@@ -1,29 +1,28 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../App'; 
+import React from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-type SignupScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Signup'>;
+const SignupScreen = ({ navigation }) => {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
-interface Props {
-  navigation: SignupScreenNavigationProp;
-}
-
-const SignupScreen: React.FC<Props> = ({ navigation }) => {
-  const [name, setName] = useState('');
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
       <TextInput
+        placeholder="Email"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
         style={styles.input}
-        placeholder="Enter your name"
-        value={name}
-        onChangeText={setName}
       />
-      <Button title="Sign Up" onPress={() => navigation.navigate('Home', { userName: name })} />
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.link}>Already have an account? Log in</Text>
-      </TouchableOpacity>
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+        secureTextEntry
+        style={styles.input}
+      />
+      <Button title="Sign Up" onPress={() => navigation.navigate('Home')} style={styles.button} />
+      <Text style={styles.text}>Already have an account? <Text style={styles.link} onPress={() => navigation.navigate('Login')}>Login</Text></Text>
     </View>
   );
 };
@@ -33,23 +32,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 16,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
-    marginBottom: 16,
-    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 8,
+    marginBottom: 10,
+    padding: 8,
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  text: {
+    marginTop: 20,
+    textAlign: 'center',
   },
   link: {
-    textAlign: 'center',
-    color: 'blue',
-    marginTop: 16,
+    color: '#007AFF',
+    fontWeight: 'bold',
   },
 });
 
